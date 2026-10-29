@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agra Shoe Market Blog | Wholesale Footwear Insights — Karakorum</title>
+    <meta name="description" content="Insights on Agra shoe market, leather footwear manufacturing, B2B wholesale sourcing, and industry trends. By Karakorum — direct manufacturer in Agra.">
+    <meta name="keywords" content="Agra shoe market blog, leather footwear insights, wholesale shoes India, Agra manufacturer blog" />
+    <link rel="canonical" href="https://karakorum.onrender.com/blog.html" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Agra Shoe Market Blog | Karakorum Footwear" />
+    <meta property="og:description" content="Insights on Agra shoe market, leather manufacturing, and B2B wholesale sourcing." />
+    <meta property="og:type" content="blog" />
+    <meta property="og:url" content="https://karakorum.onrender.com/blog.html" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo" style="display: flex; align-items: center; font-size: 1.8rem; letter-spacing: 1px;">
+                Karakorum
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#catalog">Catalog</a></li>
+                <li><a href="blog.html">Blog & Heritage</a></li>
+                <li><a href="index.html#contact" class="cta-nav">Get a Quote</a></li>
+            </ul>
+            <a href="index.html#contact" class="cta-button">Request Quote</a>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Karakorum Blog & Heritage</h1>
+        <p>Insights on Footwear Manufacturing & Agra's Heritage</p>
+    </div>
+
+    <main class="blog-container">
+        <!-- Static SEO Content (Featured Article) -->
+        <article class="blog-post">
+            <div class="blog-content">
+                <h2 class="blog-title">The Legacy of Agra's Shoemaking</h2>
+                <p class="blog-desc">How the Mughal era shaped the craftsmanship of India's biggest footwear hub.</p>
+                <div class="blog-body">
+                    <p>Agra has been the heart of India's shoemaking industry since the Mughal era. Artisans, known as 'Karigars', have passed down their meticulous leather-working skills through generations. Today, Agra produces over 65% of domestic footwear and is recognized globally for its export-grade quality.</p>
+                    <br>
+                    <p>By sourcing directly from Agra factories like Karakorum, B2B buyers eliminate middlemen and ensure they receive authentic, high-quality products. With the recent 2023 GI (Geographical Indication) Tag, Agra footwear guarantees authenticity and export-grade craftsmanship. It is simply the most profitable decision for your retail or wholesale business.</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- Dynamic Posts Section -->
+        <h3 style="margin-top: 4rem; margin-bottom: 2rem; color: var(--text-dark); font-size: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Latest Updates</h3>
+        <div id="dynamic-blog">
+            <p style="text-align: center; color: var(--text-gray);">Loading latest posts...</p>
+        </div>
+    </main>
+
+    <footer style="background-color: #0f172a; color: #94a3b8; text-align: center; padding: 2rem;">
+        <p>&copy; 2025 Karakorum Agra. All rights reserved.</p>
+    </footer>
+
+    <script>
+        async function loadBlog() {
+            // NOTE: Replace 'blog.csv' with your Google Sheets CSV URL
+            const csvUrl = 'blog.csv';
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                
+                // Simple CSV parsing
+                const lines = data.split('\n').filter(line => line.trim() !== '');
+                const blogContainer = document.getElementById('dynamic-blog');
+                blogContainer.innerHTML = '';
+                
+                // Skip header (i=1)
+                for(let i = 1; i < lines.length; i++) {
+                    const columns = lines[i].split(',');
+                    if (columns.length >= 5) {
+                        const title = columns[0].trim();
+                        const description = columns[1].trim();
+                        const content = columns[2].trim();
+                        let imageName = columns[3].trim();
+                        const date = columns[4].trim();
+                        
+                        // Check if it's a full URL or a local image
+                        const imagePath = imageName.startsWith('http') ? imageName : 'images/' + imageName;
+
+                        const postHtml = `
+                            <article class="blog-post">
+                                <img src="${imagePath}" alt="${title}" class="blog-img">
+                                <div class="blog-content">
+                                    <span class="blog-date">${date}</span>
+                                    <h2 class="blog-title">${title}</h2>
+                                    <p class="blog-desc">${description}</p>
+                                    <div class="blog-body">
+                                        <p>${content}</p>
+                                    </div>
+                                </div>
+                            </article>
+                        `;
+                        blogContainer.insertAdjacentHTML('beforeend', postHtml);
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading blog:", error);
+                document.getElementById('dynamic-blog').innerHTML = '<p>Error loading blog posts. Please try again later.</p>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadBlog);
+    </script>
+</body>
+</html>

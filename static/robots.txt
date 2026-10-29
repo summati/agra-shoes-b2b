@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://karakorum.onrender.com/sitemap.xml
